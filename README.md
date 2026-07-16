@@ -50,10 +50,6 @@ Our method consists of two stages:
 
 ---
 
-## 🛠️ Installation
-
----
-
 ## 📦 Usage
 
 We provide optimized suffixes for various models in:
