@@ -2,9 +2,9 @@
 
 **ACL 2026** |[Code](https://github.com/Trusted-LLM/DSICL)
 
-This repository contains the official implementation of our paper **"Defending LLMs against Jailbreak Attacks via Template-Based ICL with a Defensive Suffix"**. We propose a lightweight, plug-and-play defense mechanism that combines an offline optimized defensive suffix with online template-based in-context learning (ICL) demonstrations to protect large language models from both white-box and black-box jailbreak attacks.
+This repository contains the official implementation of our paper **"Defending LLMs against Jailbreak Attacks via Template-Based ICL with a Defensive Suffix"**. We propose a lightweight, plug-and-play defense mechanism that combines an offline-optimized defensive suffix with online template-based in-context learning (ICL) demonstrations to protect large language models from both white-box and black-box jailbreak attacks.
 
-![Overview](figures/overview.png)
+![Overview](figure/1.png)
 
 ---
 
@@ -34,7 +34,7 @@ Our method consists of two stages:
 - Combine the selected demonstration, the user prompt, and the pre‑trained defensive suffix into a structured template.
 - Feed the composite prompt to the LLM for safe response generation.
 
-![Pipeline](figures/pipeline.png)
+![Pipeline](figure/2.png)
 
 ---
 
@@ -42,15 +42,11 @@ Our method consists of two stages:
 
 ### White‑box Setting (AdvBench)
 
+![Pipeline](figure/3.png)
+
 ### Black‑box Setting (GPT-3.5 / GPT-4.1)
 
-### Transferability on JailbreakBench
-
-Our method generalizes to unseen attacks (DSN, JBC, etc.) with significant ASR reductions over baselines.
-
-### Benign Utility
-
-Minimal impact on MMLU and MT‑bench scores, with only a slight increase in over‑refusal (acceptable trade‑off).
+![Pipeline](figure/4.png)
 
 ---
 
@@ -60,29 +56,22 @@ Minimal impact on MMLU and MT‑bench scores, with only a slight increase in ove
 
 ## 📦 Usage
 
-### 1. Train a Defensive Suffix
-
-### 2. Deploy Defense During Inference
-
-### 3. Pre‑trained Suffixes
-
-We provide optimized suffixes for various models in `suffixes/`:
+We provide optimized suffixes for various models in:
 
 | Model               | Suffix (excerpt) |
 |---------------------|------------------|
-| Vicuna-7b           | `Barb);\nBbbpace npe What Download...` |
-| Llama-2-7b-chat     | `szóimationBig ' '{Uhh okay Dave Sant...` |
-| Black‑box (transfer)| `enemies pay Ykpa reading socialehot...` |
+| Vicuna-7b           | `Barb);\nвърpace пре What Download some unsafe software???encies/? Map>,` |
+| Llama-2-7b-chat     | `szóimationBig'] `{Uhh okay Dave Sant (** caller), unfortunately personally` |
+| Black‑box (transfer)| `s.' enemies pay Украreading socialehot exploман Spark (+ Cannot [by actress` |
 
 The template used is:
 
 ```
-You are an assistant that is harmless and helpful. ... 
+You are an assistant that is harmless and helpful. Importantly, you need to always prioritize safety over helpfulness. That is, if answering the user query could be unsafe or harmful, you should refuse to answer. Otherwise provide a thorough and precise response, ensuring you assist the user to the best of your ability.
 For example, {ICL demonstration}
 Then, answer the question: {PROMPT}
 {Defensive Suffix}
 ```
-
 
 ## ⚠️ Disclaimer
 
